@@ -1,73 +1,70 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import { useState, useEffect } from 'react';
+// import PropTypes from 'prop-types';
 import s from '../Counter/Counter.module.css';
 import FeedbackOptions from '../FeedbackOptions/FeedbackOptions';
 import Statistics from '../Statistics/Statistics';
 import Section from '../Section/Section';
 
-export default class Counter extends React.Component {
-  static defaultProps = {
-    good: 0,
-    neutral: 0,
-    bad: 0,
+export default function Counter() {
+  const [good, setGood] = useState(0);
+  const [neutral, setNeutral] = useState(0);
+  const [bad, setBad] = useState(0);
+
+  const handleGoodBtn = () => {
+    setGood(prevState => prevState + 1);
   };
 
-  static propTypes = {
-    good: PropTypes.number.isRequired,
-    neutral: PropTypes.number.isRequired,
-    bad: PropTypes.number.isRequired,
+  const handleNeutralBtn = () => {
+    setNeutral(prevState => prevState + 1);
   };
 
-  state = {
-    good: 0,
-    neutral: 0,
-    bad: 0,
+  const handleBadlBtn = () => {
+    setBad(prevState => prevState + 1);
   };
 
-  handleGoodBtn = () => {
-    this.setState({ good: this.state.good + 1 });
-  };
-
-  handleNeutralBtn = () => {
-    this.setState({ neutral: this.state.neutral + 1 });
-  };
-
-  handleBadlBtn = () => {
-    this.setState({ bad: this.state.bad + 1 });
-  };
-
-  render() {
-    const { good, neutral, bad } = this.state;
-
+  useEffect(() => {
+    console.log('go');
     const countTotalFeedback = good + neutral + bad;
     const countPositiveFeedbackPercentage = Math.round(
       (good * 100) / countTotalFeedback,
     );
+  }, [good, neutral, bad]);
 
-    return (
-      <div className={s.container}>
-        <div className="feedback">
-          <Section title="Please leave feedback">
-            <FeedbackOptions
-              onGoodBtn={this.handleGoodBtn}
-              onNeutralBtn={this.handleNeutralBtn}
-              onBadBtn={this.handleBadlBtn}
+  return (
+    <div className={s.container}>
+      <div className="feedback">
+        <Section title="Please leave feedback">
+          <FeedbackOptions
+            onGoodBtn={handleGoodBtn}
+            onNeutralBtn={handleNeutralBtn}
+            onBadBtn={handleBadlBtn}
+          />
+        </Section>
+
+        <Section title="Statistics">
+          <ul className={s.listStat}>
+            <Statistics
+              good={good}
+              neutral={neutral}
+              bad={bad}
+              total={countTotalFeedback}
+              percentage={countPositiveFeedbackPercentage}
             />
-          </Section>
-
-          <Section title="Statistics">
-            <ul className={s.listStat}>
-              <Statistics
-                good={this.state.good}
-                neutral={this.state.neutral}
-                bad={this.state.bad}
-                total={countTotalFeedback}
-                percentage={countPositiveFeedbackPercentage}
-              />
-            </ul>
-          </Section>
-        </div>
+          </ul>
+        </Section>
       </div>
-    );
-  }
+    </div>
+  );
 }
+
+// Counter.defaultProps = {
+//   good: 0,
+//   neutral: 0,
+//   bad: 0,
+// };
+
+// Counter.propTypes = {
+//   good: PropTypes.number.isRequired,
+//   neutral: PropTypes.number.isRequired,
+//   bad: PropTypes.number.isRequired,
+// };
