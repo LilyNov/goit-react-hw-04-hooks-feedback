@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import s from '../Counter/Counter.module.css';
 import FeedbackOptions from '../FeedbackOptions/FeedbackOptions';
 import Statistics from '../Statistics/Statistics';
@@ -25,10 +25,6 @@ export default function Counter() {
   const handleBadlBtn = () => {
     setBad(prevState => prevState + 1);
   };
-
-  useEffect(() => {
-    console.log('op');
-  }, [good, neutral, bad]);
 
   return (
     <div className={s.container}>
@@ -57,14 +53,14 @@ export default function Counter() {
   );
 }
 
-// Counter.defaultProps = {
-//   good: 0,
-//   neutral: 0,
-//   bad: 0,
-// };
+Counter.defaultProps = {
+  good: 0,
+  neutral: 0,
+  bad: 0,
+};
 
-// Counter.propTypes = {
-//   good: PropTypes.number.isRequired,
-//   neutral: PropTypes.number.isRequired,
-//   bad: PropTypes.number.isRequired,
-// };
+Counter.propTypes = {
+  good: PropTypes.number.isRequired,
+  neutral: PropTypes.number.isRequired,
+  bad: PropTypes.number.isRequired,
+};
