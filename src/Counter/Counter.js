@@ -9,6 +9,10 @@ export default function Counter() {
   const [good, setGood] = useState(0);
   const [neutral, setNeutral] = useState(0);
   const [bad, setBad] = useState(0);
+  const countTotalFeedback = good + neutral + bad;
+  const countPositiveFeedbackPercentage = Math.round(
+    (good * 100) / countTotalFeedback,
+  );
 
   const handleGoodBtn = () => {
     setGood(prevState => prevState + 1);
@@ -23,11 +27,7 @@ export default function Counter() {
   };
 
   useEffect(() => {
-    console.log('go');
-    const countTotalFeedback = good + neutral + bad;
-    const countPositiveFeedbackPercentage = Math.round(
-      (good * 100) / countTotalFeedback,
-    );
+    console.log('op');
   }, [good, neutral, bad]);
 
   return (
